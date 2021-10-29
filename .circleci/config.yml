@@ -34,8 +34,8 @@ jobs:
       - run:
           name: "Say world"
           command: "echo World!"
-          
- say-name:
+
+  say-name:
     docker:
       - image: circleci/node:13.8.0
     # Add steps to the job
@@ -45,6 +45,7 @@ jobs:
       - run:
           name: "What is my Name???"
           command: echo ${MY_VAR_NAME}
+
 
 
 # Invoke jobs via workflows
@@ -57,3 +58,4 @@ workflows:
       - say-world:
           requires:
             - say-hello
+      - say-name
