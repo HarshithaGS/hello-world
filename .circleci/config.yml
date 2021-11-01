@@ -31,6 +31,12 @@ jobs:
           at: ~/
       - run: cat ~/output.txt
 
+  commands:
+    test1:
+      description: "A very simple command to print the wokflow id "
+    parameters:
+    steps:
+      - run: cat $CIRCLE_WORKFLOW_ID
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
