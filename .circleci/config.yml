@@ -8,6 +8,12 @@ orbs:
   welcome: circleci/welcome-orb@0.4.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+
+commands:
+    print_pipeline_id:
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
+
 jobs:
   save_hello_world_output:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
@@ -30,13 +36,15 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: cat ~/output.txt
-
-  commands:
-    test1:
-      description: "A very simple command to print the wokflow id "
-    parameters:
+  
+  id_job:
+    docker:
+      - image: circleci/node:13.8.0
     steps:
-      - run: cat $CIRCLE_WORKFLOW_ID
+      - print_pipeline_id
+
+
+  
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -46,3 +54,4 @@ workflows:
       - attach_workspace block:
           requires:
             - save_hello_world_output
+      - id_job
